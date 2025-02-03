@@ -1,17 +1,17 @@
 #include <REGX52.H>
-#include "TIMER0.h"
 #include "LCD1602.h"
+#include "TIMER0.h"
 
-unsigned int CLOCK;
+unsigned char SEC=0;
 
 void main()
 {
-	Timer0_Init();
 	LCD_Init();
+	Timer0_Init();
+	LCD_ShowString(1,1,"CLOCK:");
 	while(1)
 	{
-		LCD_ShowString(1,1,"clock:");
-		LCD_ShowNum(2,1,CLOCK,4);
+		LCD_ShowNum(2,1,SEC,2);
 	}
 }
 
@@ -25,6 +25,7 @@ void Timer0_Routine() interrupt 1
 	if(T0Count>=500)
 	{
 		T0Count=0;
-		CLOCK++;
+		SEC++;
+//		if(SEC>=99) SEC=0;
 	}
 }
